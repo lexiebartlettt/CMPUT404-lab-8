@@ -10,6 +10,8 @@ var users = require('./routes/users');
 
 var app = express();
 
+var players = {};
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -68,19 +70,6 @@ console.log('Websocket server started on 8080');
 
 var rabbit = {x:0, y:0};
 
-wss.on('connection', function(ws) {
-  ws.on('message', function(message) {
-    var incommingMsg = JSON.parse(message);
-    rabbit.x = incommingMsg.x;
-    rabbit.y = incommingMsg.y;
-    for(var i in wss.clients) {
-      wss.clients[i].send(JSON.stringify(rabbit));
-    }
-
-  });
-  ws.send(JSON.stringify(rabbit));
-});
-
 /*
 app.listen(3000, function () {
   console.log('Web server started on 3000!');
@@ -88,3 +77,15 @@ app.listen(3000, function () {
 */
 
 module.exports = app;
+
+wss.on('connection', function(ws) {
+  ws.on('message', function(message) {
+    var incommingMsg = JSON.parse(message);
+    players[incommingMsg.uuid] = {x: incommingMsg.x, y: incommingMsg.y};
+    for(var i in wss.clients) {
+      wss.clients[i].send(JSON.stringify(players));
+    }
+
+  });
+  ws.send(JSON.stringify(players));
+});
