@@ -68,15 +68,11 @@ var WebSocketServer = require('ws').Server, wss = new WebSocketServer({port: 808
 
 console.log('Websocket server started on 8080');
 
-var rabbit = {x:0, y:0};
-
 /*
 app.listen(3000, function () {
   console.log('Web server started on 3000!');
 });
 */
-
-module.exports = app;
 
 wss.on('connection', function(ws) {
   ws.on('message', function(message) {
@@ -89,3 +85,4 @@ wss.on('connection', function(ws) {
   });
   ws.send(JSON.stringify(players));
 });
+module.exports = app;

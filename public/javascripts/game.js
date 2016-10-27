@@ -104,17 +104,20 @@ function render() {
     // game.debug.body(player);
 
 }
-
+function guid() {
+  function s4() {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  }
+  return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+    s4() + '-' + s4() + s4() + s4();
+}
 //random UID from http://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript/105074#105074 
 
+
 function Client() {
-    function s4() {
-        return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-     }
-      return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-      s4() + '-' + s4() + s4() + s4();
+
 }
 
 Client.prototype.openConnection = function() {
